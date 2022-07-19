@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="UsbCameraSample.MainPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:UsbCameraSample;assembly=UsbCameraSample"
+    xmlns:system="clr-namespace:System;assembly=netstandard">
+    <ContentPage.Resources>
+        <x:Array x:Key="CameraRotationAry" Type="{x:Type system:Int32}">
+            <system:Int32>0</system:Int32>
+            <system:Int32>90</system:Int32>
+            <system:Int32>180</system:Int32>
+            <system:Int32>270</system:Int32>
+        </x:Array>
+    </ContentPage.Resources>
+    <Grid RowDefinitions="Auto,*,Auto">
+        <StackLayout x:Name="PanelSetting" Margin="10">
+            <Grid ColumnDefinitions="auto,*">
+                <Label Text="Camera:" VerticalOptions="Center" />
+                <Picker
+                    x:Name="PickerCamera"
+                    Title="Camera"
+                    Grid.Column="1"
+                    ItemDisplayBinding="{Binding DisplayName}"
+                    SelectedIndexChanged="PickerCamera_OnSelectedIndexChanged" />
+            </Grid>
+
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Resolution:" VerticalOptions="Center" />
+                <Picker x:Name="PickerResolution" Title="Resolution" />
+            </StackLayout>
+
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Rotation" VerticalOptions="Center" />
+                <Picker x:Name="PickerRotation" ItemsSource="{StaticResource CameraRotationAry}" SelectedIndex="0" WidthRequest="60" />
+
+                <Label Text="FlipHor." VerticalOptions="Center" />
+                <CheckBox x:Name="ChkFlipHorizontally" />
+
+                <Label Text="FlipVer." VerticalOptions="Center" />
+                <CheckBox x:Name="ChkFlipVertically" />
+            </StackLayout>
+        </StackLayout>
+
+        <local:UvcCameraView x:Name="UvcCameraView" Grid.Row="1" />
+
+        <StackLayout
+            Grid.Row="2"
+            Margin="0,0,0,10"
+            HorizontalOptions="Center"
+            Orientation="Horizontal"
+            Spacing="32">
+            <Button x:Name="BtnStartStop" Clicked="BtnStartStop_OnClicked" Text="Open" TextTransform="None" />
+            <Button
+                x:Name="BtnRecord"
+                Clicked="BtnRecord_OnClicked"
+                IsVisible="False"
+                Text="Start Recording"
+                TextTransform="None" />
+            <Button
+                x:Name="BtnSnapshot"
+                Clicked="BtnSnapshot_OnClicked"
+                IsVisible="False"
+                Text="Snapshot"
+                TextTransform="None" />
+        </StackLayout>
+    </Grid>
+</ContentPage>
